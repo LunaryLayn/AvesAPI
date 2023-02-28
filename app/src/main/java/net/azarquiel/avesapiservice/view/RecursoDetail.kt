@@ -1,22 +1,21 @@
 package net.azarquiel.avesapiservice.view
 
 import android.os.Bundle
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputLayout
 import com.squareup.picasso.Picasso
 import net.azarquiel.avesapiservice.R
 import net.azarquiel.avesapiservice.adapters.ComentarioAdapter
 import net.azarquiel.avesapiservice.databinding.ActivityRecursoDetailBinding
 import net.azarquiel.avesapiservice.entities.Comentario
+import net.azarquiel.avesapiservice.entities.ComentarioView
 import net.azarquiel.avesapiservice.entities.Recurso
 import net.azarquiel.avesapiservice.entities.Usuario
 import net.azarquiel.avesapiservice.viewmodel.MainViewModel
@@ -26,11 +25,11 @@ import java.util.*
 class RecursoDetail : AppCompatActivity() {
 
     private var usuario: Usuario? = null
-    private lateinit var image: ImageView
-    private lateinit var comentarios: List<Comentario>
-    private lateinit var recurso: Recurso
-    private lateinit var viewmodel: MainViewModel
+    private lateinit var comentarios: List<ComentarioView>
     private lateinit var adapter: ComentarioAdapter
+    private lateinit var viewmodel: MainViewModel
+    private lateinit var image: ImageView
+    private lateinit var recurso: Recurso
     private lateinit var binding: ActivityRecursoDetailBinding
 
 
@@ -97,11 +96,14 @@ class RecursoDetail : AppCompatActivity() {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val fechaTXT = sdf.format(fecha)
 
-        val com = Comentario(12, recurso.id, usuario!!.nick, fechaTXT, s)
+        val com = Comentario(12, usuario!!.id, recurso.id, fechaTXT, s)
         viewmodel.saveComentarioByRecurso(recurso.id, com).observe(this, Observer { it ->
             it?.let{
                 msg("Anotado comentario...")
-                getComentarios()
+                val comentariosanterior = ArrayList(comentarios)
+                comentariosanterior.add(0, ComentarioView(usuario!!.nick, it.fecha, it.comentario))
+                comentarios = comentariosanterior
+                adapter.setComentarios(comentarios)
             }
         })
     }

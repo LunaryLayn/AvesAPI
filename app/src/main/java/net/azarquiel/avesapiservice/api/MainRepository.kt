@@ -1,8 +1,5 @@
 package net.azarquiel.avesapiservice.api
-import net.azarquiel.avesapiservice.entities.Comentario
-import net.azarquiel.avesapiservice.entities.Recurso
-import net.azarquiel.avesapiservice.entities.Usuario
-import net.azarquiel.avesapiservice.entities.Zona
+import net.azarquiel.avesapiservice.entities.*
 
 class MainRepository {
     val service = WebAccess.avesService
@@ -39,7 +36,7 @@ class MainRepository {
         return null
     }
 
-    suspend fun getComentariosByRecurso(idrecurso: Long): List<Comentario> {
+    suspend fun getComentariosByRecurso(idrecurso: Long): List<ComentarioView> {
         val webResponse = service.getComentariosByRecurso(idrecurso).await()
         if (webResponse.isSuccessful) {
             return webResponse.body()!!.comentarios

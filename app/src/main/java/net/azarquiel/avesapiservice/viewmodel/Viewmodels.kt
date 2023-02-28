@@ -6,10 +6,7 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import net.azarquiel.avesapiservice.api.MainRepository
-import net.azarquiel.avesapiservice.entities.Comentario
-import net.azarquiel.avesapiservice.entities.Recurso
-import net.azarquiel.avesapiservice.entities.Usuario
-import net.azarquiel.avesapiservice.entities.Zona
+import net.azarquiel.avesapiservice.entities.*
 
 class MainViewModel : ViewModel() {
 
@@ -48,8 +45,8 @@ class MainViewModel : ViewModel() {
         return usuarioresponse
     }
 
-    fun getComentariosByRecurso(idrecurso: Long): MutableLiveData<List<Comentario>> {
-        val comentarios = MutableLiveData<List<Comentario>>()
+    fun getComentariosByRecurso(idrecurso: Long): MutableLiveData<List<ComentarioView>> {
+        val comentarios = MutableLiveData<List<ComentarioView>>()
         GlobalScope.launch(Main) {
             comentarios.value = repository.getComentariosByRecurso(idrecurso)
         }

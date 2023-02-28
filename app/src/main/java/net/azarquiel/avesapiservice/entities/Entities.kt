@@ -24,12 +24,17 @@ data class Usuario(
     var pass: String
 ): Serializable
 
-data class Comentario(
-    var id: Long,
-    var recurso: Long,
+data class ComentarioView (
     var nick: String,
     var fecha: String,
-    var comentario: String,
+    var comentario:String
+)
+data class Comentario (
+    var id:Long,
+    var usuario:Long,
+    var recurso:Long,
+    var fecha:String,
+    var comentario:String
 )
 
 data class Respuesta(
@@ -40,6 +45,6 @@ data class Respuesta(
     val usuario: Usuario,
     val usuarios: List<Usuario>,
     val comentario: Comentario,
-    val comentarios: List<Comentario>
+    val comentarios: List<ComentarioView>
 )
 

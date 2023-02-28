@@ -9,10 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import net.azarquiel.avesapiservice.R
-import net.azarquiel.avesapiservice.entities.Comentario
-import net.azarquiel.avesapiservice.entities.Recurso
-import net.azarquiel.avesapiservice.entities.Usuario
-import net.azarquiel.avesapiservice.entities.Zona
+import net.azarquiel.avesapiservice.entities.*
 
 class ZonaAdapter(val context: Context,
                   val layout: Int
@@ -112,10 +109,10 @@ class RecursoAdapter(val context: Context,
 }
 
 class ComentarioAdapter(val context: Context,
-                     val layout: Int
+                        val layout: Int
 ) : RecyclerView.Adapter<ComentarioAdapter.ViewHolder>() {
 
-    private var dataList: List<Comentario> = emptyList()
+    private var dataList: List<ComentarioView> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -132,14 +129,14 @@ class ComentarioAdapter(val context: Context,
         return dataList.size
     }
 
-    internal fun setComentarios(comentarios: List<Comentario>) {
-        this.dataList = comentarios
+    internal fun setComentarios(comentarioes: List<ComentarioView>) {
+        this.dataList = comentarioes
         notifyDataSetChanged()
     }
 
 
     class ViewHolder(viewlayout: View, val context: Context) : RecyclerView.ViewHolder(viewlayout) {
-        fun bind(dataItem: Comentario){
+        fun bind(dataItem: ComentarioView){
             // itemview es el item de diseño
             // al que hay que poner los datos del objeto dataItem
             val recursodetfecha = itemView.findViewById(R.id.recursodetfecha) as TextView
